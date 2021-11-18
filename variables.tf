@@ -1,0 +1,3 @@
+variable "credentials" {}
+
+variable "vmdata" {}
