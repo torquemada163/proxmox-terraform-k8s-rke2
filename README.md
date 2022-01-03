@@ -2,6 +2,9 @@
 
 Based on https://github.com/andreilapkin/tf-pve-k8s
 
+## Preamble
+One of the tasks of the Terraform script is to automatically create an inventory file for later launching Ansible playbooks. This is the main problem.
+The Terraform provider Telmate/proxmox uses the `ssh_host` attribute to determine the IP address of instances.
 ## Installation
 1. Copy content of **run_on_pve** folder to Proxmov VE
 2. Copy your public SSH key file to Proxmox VE and remember name and location (i.e., `/root/user.pub`)

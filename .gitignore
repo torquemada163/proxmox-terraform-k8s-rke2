@@ -1,2 +1,8 @@
 .terraform/
 *.log
+*.backup
+*.tfstate
+*.hcl
+*.tfvars
+*.info
+inventory
