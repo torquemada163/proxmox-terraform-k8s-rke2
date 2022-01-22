@@ -12,9 +12,9 @@ resource "proxmox_vm_qemu" "vm_master" {
   ipconfig0               = var.vmdata.ip_dhcp ? "ip=dhcp" : "ip=${var.vmdata.ip_first_three_block}.${var.vmdata.ip_last_block_start + count.index}/24,gw=${var.vmdata.ip_gw}"
   nameserver              = var.vmdata.ip_dhcp ? "" : var.vmdata.ip_dns
 
-  cores    = 1
-  sockets  = 1
-  memory   = 2048
+  cores    = var.vmdata.master_cores
+  sockets  = var.vmdata.master_socket
+  memory   = var.vmdata.master_mem
   hotplug  = "disk,usb,network"
   scsihw   = "virtio-scsi-pci"
   bootdisk = "virtio0"
@@ -27,7 +27,7 @@ resource "proxmox_vm_qemu" "vm_master" {
   }
 
   disk {
-    size        = "20G"
+    size        = var.vmdata.master_disk_size
     type        = "virtio"
     storage     = var.vmdata.diskstorage
   }
@@ -65,9 +65,9 @@ resource "proxmox_vm_qemu" "vm_worker" {
   ipconfig0               = var.vmdata.ip_dhcp ? "ip=dhcp" : "ip=${var.vmdata.ip_first_three_block}.${var.vmdata.ip_last_block_start + var.vmdata.master_count + count.index}/24,gw=${var.vmdata.ip_gw}"
   nameserver              = var.vmdata.ip_dhcp ? "" : var.vmdata.ip_dns
 
-  cores    = 1
-  sockets  = 1
-  memory   = 2048
+  cores    = var.vmdata.worker_cores
+  sockets  = var.vmdata.worker_socket
+  memory   = var.vmdata.worker_mem
   hotplug  = "disk,usb,network"
   scsihw   = "virtio-scsi-pci"
   bootdisk = "virtio0"
@@ -80,7 +80,7 @@ resource "proxmox_vm_qemu" "vm_worker" {
   }
 
   disk {
-    size        = "20G"
+    size        = var.vmdata.worker_disk_size
     type        = "virtio"
     storage     = var.vmdata.diskstorage
   }
